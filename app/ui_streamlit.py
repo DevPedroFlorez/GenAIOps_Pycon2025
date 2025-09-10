@@ -3,14 +3,14 @@ import sys, os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import streamlit as st
-st.set_page_config(page_title="Chatbot GenAI RRHH", layout="centered")
+st.set_page_config(page_title="MindHelper — Psicología", layout="centered")
 
 from app.rag_pipeline import load_vectorstore_from_disk, build_chain
 
 
-st.title("🤖 Asistente de Recursos Humanos - Contoso")
+st.title("🤖 Tu asistente de psicología")
 
-question = st.text_input("Escribe tu pregunta sobre beneficios o políticas laborales:")
+question = st.text_input("Curioso por la mente humana? Pregunta lo que quieras")
 
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []

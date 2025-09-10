@@ -6,7 +6,8 @@ import mlflow
 from dotenv import load_dotenv
 from app.rag_pipeline import load_vectorstore_from_disk, build_chain
 
-from langchain_openai import ChatOpenAI
+#from langchain_openai import ChatOpenAI
+from langchain_openai import AzureChatOpenAI
 from langchain.evaluation.qa import QAEvalChain
 
 load_dotenv()
@@ -26,7 +27,16 @@ vectordb = load_vectorstore_from_disk()
 chain = build_chain(vectordb, prompt_version=PROMPT_VERSION)
 
 # LangChain Evaluator
-llm = ChatOpenAI(temperature=0)
+# llm = ChatOpenAI(temperature=0)
+
+llm = AzureChatOpenAI(
+    azure_deployment=os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
+    openai_api_version=os.getenv("OPENAI_API_VERSION"),
+    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+    api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+    temperature=0
+)
+
 langchain_eval = QAEvalChain.from_llm(llm)
 
 # ✅ Establecer experimento una vez
